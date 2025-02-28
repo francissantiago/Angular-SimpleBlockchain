@@ -1,0 +1,31 @@
+<div class="container">
+    <h1 class="text-center">🚀 Mini Blockchain</h1>
+
+    <div class="input-group my-3">
+        <input type="text" [(ngModel)]="newBlockData" class="form-control" placeholder="Digite os dados do bloco" [disabled]="isMining">
+        <button class="btn btn-primary" (click)="addBlock()" [disabled]="isMining">Adicionar Bloco</button>
+    </div>
+
+    <div class="alert" *ngIf="miningStatus">{{ miningStatus }}</div>
+
+    <div class="alert" [ngClass]="isBlockchainValid ? 'alert-success' : 'alert-danger'">
+        {{ isBlockchainValid ? 'Blockchain Válida ✅' : 'Blockchain Corrompida ❌' }}
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center my-3">
+        <button class="btn btn-secondary" (click)="previousBlock()" [disabled]="currentIndex === 0">⬅️ Anterior</button>
+        <h5>Bloco #{{ blockchainService.blockchain[currentIndex]?.index }}</h5>
+        <button class="btn btn-secondary" (click)="nextBlock()" [disabled]="currentIndex === blockchainService.blockchain.length - 1">Próximo ➡️</button>
+    </div>
+
+    <div class="card mb-3" *ngIf="blockchainService.blockchain.length > 0">
+        <div class="card-body">
+            <h5 class="card-title">Bloco #{{ blockchainService.blockchain[currentIndex]?.index }}</h5>
+            <p class="card-text"><strong>Timestamp:</strong> {{ blockchainService.blockchain[currentIndex]?.timestamp }}</p>
+            <p class="card-text"><strong>Dados:</strong> {{ blockchainService.blockchain[currentIndex]?.data }}</p>
+            <p class="card-text"><strong>Nonce:</strong> {{ blockchainService.blockchain[currentIndex]?.nonce }}</p>
+            <p class="card-text"><strong>Hash:</strong> {{ blockchainService.blockchain[currentIndex]?.hash }}</p>
+            <p class="card-text"><strong>Hash Anterior:</strong> {{ blockchainService.blockchain[currentIndex]?.previousHash }}</p>
+        </div>
+    </div>
+</div>
